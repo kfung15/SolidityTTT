@@ -1,24 +1,31 @@
-pragma solidity 0.5.1;
+pragma solidity 0.6.2;
 
 contract tictactoe {
 
-    //Making explicit all the variables
+    //Variables for the original constructor
     uint256 public playerCount;
     uint public betAmount;
-    mapping(uint => Player) public player;
-    address payable wallet;
-    address payable masterWallet;
     address owner;
+
+    //Each player has their own integer
+    mapping(uint => Player) public player;
+
+    //For collection of player addresses
+    address[] public playerList;
+
+    //Maps the player to their deposit amount.
+    mapping (address => uint) public playerBalance;
+
+    //How much ETH is in the contract itself.
+    uint public totalBank;
+
+    //For the endgame count.
+    uint i;
+
 
     //This is the state of the game
     enum State { Waiting, InProgress, Finished }
     State public state;
-
-    //You can only send requests to the original contract address
-    modifier onlyOwner() {
-        require(msg.sender == owner);
-        _;
-    }
 
     //This is the structure of a player
     struct Player {
@@ -28,11 +35,9 @@ contract tictactoe {
         address _owner;
     }
 
-    constructor(address payable _wallet) public {
-        owner = msg.sender;
-        wallet = _wallet;
+    constructor() public {
         state = State.Waiting;
-        masterWallet = 0x99E093e9D26A2B74a37f442Dc8584a068C1eB763;
+        i = 0;
     }
 
     function addPlayer(string memory _playerName) public payable {
@@ -40,14 +45,21 @@ contract tictactoe {
         require(msg.value >= 0);
         //Increase player count by 1
         incrementCount();
+        //Appends the player's address to the address list, for later reference.
+        playerList.push(msg.sender);
+        //Increase the value for the individual player.
+        playerBalance[msg.sender] += msg.value;
+        //Increase the value for the contract itself.
+        totalBank += msg.value;
+
+
+        //Original Player Constructor code
         //Stores amount that player bet
         betAmount = msg.value;
         //Stores address of player's wallet
         owner = msg.sender;
         //Creates the player object based on the information above
         player[playerCount] = Player(playerCount, _playerName, betAmount, owner);
-        //Transfers the sent ether to the master wallet
-        masterWallet.transfer(msg.value);
 
     }
 
@@ -61,6 +73,16 @@ contract tictactoe {
     function beginGame() public {
         require(playerCount == 2);
         state = State.InProgress;
+    }
+
+    function endGame () public {
+        require(state == State.InProgress);
+        state = State.Finished;
+        msg.sender.transfer(totalBank);
+        for (i = 0; i < playerCount; i++){
+            playerBalance[playerList[i]] = 0;
+        }
+        totalBank = 0;
     }
 }
 
