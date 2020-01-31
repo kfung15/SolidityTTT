@@ -1,4 +1,4 @@
-pragma solidity 0.6.2;
+pragma solidity 0.5.16;
 
 contract tictactoe {
 
@@ -9,7 +9,7 @@ contract tictactoe {
 
     //Each player has their own integer
     mapping(uint => Player) public player;
-
+    
     //For collection of player addresses
     address[] public playerList;
 
@@ -17,11 +17,10 @@ contract tictactoe {
     mapping (address => uint) public playerBalance;
 
     //How much ETH is in the contract itself.
-    uint public totalBank;
+    uint totalBank;
 
     //For the endgame count.
     uint i;
-
 
     //This is the state of the game
     enum State { Waiting, InProgress, Finished }
@@ -84,16 +83,8 @@ contract tictactoe {
         }
         totalBank = 0;
     }
-}
 
-
-//For developmental purposes, ignore pls
-/*
-contract backdoor is tictactoe {
-
-    function forceAdd(string memory _firstName, string memory _lastName) public{
-        tictactoe.addPerson(_firstName, _lastName);
+    function CheckBalance () view public returns(uint) {
+        return totalBank;
     }
 }
-
-*/
