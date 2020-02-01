@@ -1,4 +1,4 @@
-pragma solidity 0.5.16;
+pragma solidity 0.5.3;
 
 contract tictactoe {
 
@@ -9,7 +9,7 @@ contract tictactoe {
 
     //Each player has their own integer
     mapping(uint => Player) public player;
-    
+
     //For collection of player addresses
     address[] public playerList;
 
@@ -29,7 +29,6 @@ contract tictactoe {
     //This is the structure of a player
     struct Player {
         uint _id;
-        string _playerName;
         uint _betAmount;
         address _owner;
     }
@@ -39,7 +38,7 @@ contract tictactoe {
         i = 0;
     }
 
-    function addPlayer(string memory _playerName) public payable {
+    function addPlayer() public payable {
         //Player must send some ether
         require(msg.value >= 0);
         //Increase player count by 1
@@ -58,7 +57,7 @@ contract tictactoe {
         //Stores address of player's wallet
         owner = msg.sender;
         //Creates the player object based on the information above
-        player[playerCount] = Player(playerCount, _playerName, betAmount, owner);
+        player[playerCount] = Player(playerCount, betAmount, owner);
 
     }
 
@@ -86,5 +85,10 @@ contract tictactoe {
 
     function CheckBalance () view public returns(uint) {
         return totalBank;
+    }
+
+    //Fallback function for external purposes
+    function () external payable {
+        addPlayer();
     }
 }
