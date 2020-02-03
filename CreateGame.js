@@ -35,4 +35,3 @@ function createNewGame() {
   TTTContract.deploy({data:bytecode}).send({from:account,gas:1500000,gasPrice:web3.utils.toWei('0.00003', 'ether')}).then((newContractInstance) => {TTTContract.options.address=newContractInstance.options.address})
 
 }
-TTTContract.methods.addPlayer('Ken').send({from:'0x0bbc2a48e1854b6afca6eb5604bcf00806a5cc8d'}).then((f) => console.log(f))
