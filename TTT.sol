@@ -16,6 +16,7 @@ contract tictactoe {
     //Maps the player to their deposit amount.
     mapping (address => uint) public playerBalance;
 
+
     //How much ETH is in the contract itself.
     uint totalBank;
 
@@ -73,10 +74,10 @@ contract tictactoe {
         state = State.InProgress;
     }
 
-    function endGame () public {
+    function endGame (address payable receiverAdd) public payable{
         require(state == State.InProgress);
         state = State.Finished;
-        msg.sender.transfer(totalBank);
+        address(receiverAdd).transfer(totalBank);
         for (i = 0; i < playerCount; i++){
             playerBalance[playerList[i]] = 0;
         }
@@ -86,6 +87,7 @@ contract tictactoe {
     function CheckBalance () view public returns(uint) {
         return totalBank;
     }
+
 
     //Fallback function for external purposes
     function () external payable {
