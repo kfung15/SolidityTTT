@@ -32,6 +32,22 @@ function createNewGame() {
   console.log(TTTContract)
 
   //Deploying the contract
-  TTTContract.deploy({data:bytecode}).send({from:account,gas:1500000,gasPrice:web3.utils.toWei('0.00003', 'ether')}).then((newContractInstance) => {TTTContract.options.address=newContractInstance.options.address})
+  //Consider reducing the gas, because right now you need a minimum of 45ETH in the account lol.
+  //TTTContract.deploy({data:bytecode}).send({from:account,gas:21000,gasPrice:web3.utils.toWei('0.00003', 'ether')}).then((newContractInstance) => {TTTContract.options.address=newContractInstance.options.address})
+  TTTContract.deploy({data:bytecode}).send({from:account,gas:500000,gasPrice:web3.eth.gasPrice}).then((newContractInstance) => {TTTContract.options.address=newContractInstance.options.address})
+
+  var createGameButton = document.getElementById("createGameButton")
+  var arrayCheckButton = document.getElementById("ArrayCheck")
+  var contractCheckButton = document.getElementById("ContractAddress")
+  var playerOneForm = document.getElementById("player1form")
+  var playerTwoForm = document.getElementById("player2form")
+  var qrGen = document.getElementById("QRgen")
+
+  createGameButton.style.display = "none"
+  arrayCheckButton.style.display = "block"
+  contractCheckButton.style.display = "block"
+  playerOneForm.style.display = "block"
+  playerTwoForm.style.display = "block"
+  qrGen.style.display = "block"
 
 }
