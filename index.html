@@ -13,23 +13,42 @@
 <body>
  <div class=”container”>
 <h1>TTT Smart Contract Game</h1>
-<button onclick="createNewGame()">Create Game</button>
+<button id="createGameButton" onclick="createNewGame()">Create Game</button>
+<button id ="ArrayCheck" onclick="checkArr()">Check Array</button>
+<button id = "ContractAddress" onclick="contractAddress()", src = "createQR.js">Contract Address</button>
+
+<form id = "player1form" action="">
+  <label for="playerOneBet">Player 1 Bet: </label><input type="text" id="playerOneBet" name="playerOneBet"><br><br>
+  <input type="submit" value="Player 1 Confirm">
+</form>
+
+<form id = "player2form" action="">
+  <label for="playerTwoBet">Player 2 Bet: </label><input type="text" id="playerTwoBet" name="playerTwoBet"><br><br>
+  <input type="submit" value="Player 2 Confirm">
+</form>
+
+<img style = "display:none;" id="QRPic" src = "createQR.js" />
+<button id= "QRgen" onclick="QRgen()">Generate QR</button>
+<button id= "checkWinner" onclick="checkWinner()">Sum of Array</button>
+
 </div>
 
-<script>
+<script type ="text/javascript">
 
 web3 = new Web3("ws://127.0.0.1:8545")
 
-  //Upon pressing a button, create the smart contract.
-
-
-
-
+document.getElementById("ArrayCheck").style.display = "none";
+document.getElementById("ContractAddress").style.display = "none";
+document.getElementById("player1form").style.display = "none";
+document.getElementById("player2form").style.display = "none";
+document.getElementById("QRgen").style.display = "none";
 
 
  </script>
  <!--script type="text" id="abi" src="TTT_sol_tictactoe.abi"></script> -->
  <!-- <script type="text" id="bin" src="TTT_sol_tictactoe.js"></script> -->
  <script src="CreateGame.js"></script>
+ <script src="randomNumberGame.js"></script>
+ <script src="createQR.js"></script>
 </body>
 </html>
