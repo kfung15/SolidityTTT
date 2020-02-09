@@ -15,7 +15,7 @@ function createNewGame() {
 
 
   //web3.eth.getAccounts().then(result => {account = result[0]})
-  account = '0x1d60FA738d940584BEAc14bD78e7Bf990727e324'
+  account = '0xC10786e080076425dB288048b58f135794E0384A'
 
   console.log(account)
 
@@ -34,20 +34,28 @@ function createNewGame() {
   //Deploying the contract
   //Consider reducing the gas, because right now you need a minimum of 45ETH in the account lol.
   //TTTContract.deploy({data:bytecode}).send({from:account,gas:21000,gasPrice:web3.utils.toWei('0.00003', 'ether')}).then((newContractInstance) => {TTTContract.options.address=newContractInstance.options.address})
-  TTTContract.deploy({data:bytecode}).send({from:'0x1d60FA738d940584BEAc14bD78e7Bf990727e324',gas:1000000,gasPrice:web3.utils.toWei("0.0000000025","ether")}).then((newContractInstance) =>{TTTContract.options.address=newContractInstance.options.address});
+  TTTContract.deploy({data:bytecode}).send({from:'0xC10786e080076425dB288048b58f135794E0384A',gas:1000000,gasPrice:web3.utils.toWei("0.0000000025","ether")}).then((newContractInstance) =>{TTTContract.options.address=newContractInstance.options.address});
 
+  var gameStatus = document.getElementById("gameStatus")
   var createGameButton = document.getElementById("createGameButton")
   var arrayCheckButton = document.getElementById("ArrayCheck")
   var contractCheckButton = document.getElementById("ContractAddress")
-  var playerOneForm = document.getElementById("player1form")
-  var playerTwoForm = document.getElementById("player2form")
+  var playerOneForm = document.getElementById("P1Bet")
+  var playerOneSubmitButton = document.getElementById("playerOneBet")
+  var playerTwoForm = document.getElementById("P2Bet")
+  var playerTwoSubmitButton = document.getElementById("playerTwoBet")
   var qrGen = document.getElementById("QRgen")
+  var p1betConfirm = document.getElementById("p1betConfirm")
+  var p2betConfirm = document.getElementById("p2betConfirm")
+
 
   createGameButton.style.display = "none"
+  gameStatus.style.display = "block"
   arrayCheckButton.style.display = "block"
   contractCheckButton.style.display = "block"
   playerOneForm.style.display = "block"
+  playerOneSubmitButton.style.display = "block"
   playerTwoForm.style.display = "block"
+  playerTwoSubmitButton.style.display = "block"
   qrGen.style.display = "block"
-
-}
+  }
