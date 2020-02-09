@@ -15,7 +15,7 @@ function createNewGame() {
 
 
   //web3.eth.getAccounts().then(result => {account = result[0]})
-  account = '0x961fcf3cff40e8783db4dc04e9ebda4f5efb1f23'
+  account = '0x1d60FA738d940584BEAc14bD78e7Bf990727e324'
 
   console.log(account)
 
@@ -34,7 +34,7 @@ function createNewGame() {
   //Deploying the contract
   //Consider reducing the gas, because right now you need a minimum of 45ETH in the account lol.
   //TTTContract.deploy({data:bytecode}).send({from:account,gas:21000,gasPrice:web3.utils.toWei('0.00003', 'ether')}).then((newContractInstance) => {TTTContract.options.address=newContractInstance.options.address})
-  TTTContract.deploy({data:bytecode}).send({from:account,gas:500000,gasPrice:web3.eth.gasPrice}).then((newContractInstance) => {TTTContract.options.address=newContractInstance.options.address})
+  TTTContract.deploy({data:bytecode}).send({from:'0x1d60FA738d940584BEAc14bD78e7Bf990727e324',gas:1000000,gasPrice:web3.utils.toWei("0.0000000025","ether")}).then((newContractInstance) =>{TTTContract.options.address=newContractInstance.options.address});
 
   var createGameButton = document.getElementById("createGameButton")
   var arrayCheckButton = document.getElementById("ArrayCheck")
