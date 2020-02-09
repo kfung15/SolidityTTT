@@ -17,7 +17,7 @@ contract tictactoe {
 
     }
 
-    function endGame (address payable receiverAdd) private payable{
+    function endGame (address payable receiverAdd) private{
         address(receiverAdd).transfer(totalBank);
     }
 
