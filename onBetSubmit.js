@@ -1,5 +1,13 @@
 var player1 = false;
 var player2 = false;
+var player1Address = undefined;
+var player2Address = undefined;
+var player1Balance = undefined;
+var player2Balance = undefined;
+
+
+var player1AddressEntered = false;
+var player2AddressEntered = false;
 
 
 function playerOneSubmit(){
@@ -16,7 +24,7 @@ function playerOneSubmit(){
     console.log(player1)
     console.log(player2)
     if(player1 && player2){
-      document.getElementById("gameStatus").innerHTML = "Please transfer ETH to the game!"
+      document.getElementById("gameStatus").innerHTML = "Player 1, please transfer ETH to the game!"
       waitForEthTransfer()
     }
 
@@ -42,7 +50,7 @@ function playerTwoSubmit(){
     console.log(player1)
     console.log(player2)
     if(player1 && player2){
-      document.getElementById("gameStatus").innerHTML = "Please transfer ETH to the game!"
+      document.getElementById("gameStatus").innerHTML = "Player 1, please transfer ETH to the game!"
       waitForEthTransfer()
     }
   } else {
@@ -52,6 +60,35 @@ function playerTwoSubmit(){
   }
 }
 
-function waitForEthTransfer() {
+function sleep(ms) {
+   return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function waitForEthTransfer() {
+  var player1AddressPromise = new Promise(function(resolve,reject){
+    player1Address = TTTContract.methods.playerList(0).call({from:'0x40a21e04563c7955fDBDC1b43138354352204Cc5'}).then(player1AddressEntered = true,player1AddressEntered = false)
+  });
+  while(player1AddressEntered == false){
+
+  //Call the contract to check for players depositing ethereum
+
+    //player1Address = TTTContract.methods.playerList(0).call({from:'0x40a21e04563c7955fDBDC1b43138354352204Cc5'})
+    console.log(player1Address)
+    console.log(player1AddressEntered)
+    await sleep(3000);
+
+  }
+
+
+
+  //player1Balance = TTTContract.methods.playerBalance(player1Address).call({from:''}).then((f) => console.log(f))
+
+
+  //TTTContract.methods.playerList(1).call({from:''}).then((f) => console.log(f))
 
 }
+
+// function checkP1address(){
+//   player1Address = TTTContract.methods.playerList(0).call({from:'0x40a21e04563c7955fDBDC1b43138354352204Cc5'}).then((f) => console.log(f))
+//   console.log(typeof(player1Address))
+// }
