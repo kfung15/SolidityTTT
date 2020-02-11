@@ -1,4 +1,4 @@
-var arr = 0;
+var arr = [];
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
@@ -11,7 +11,9 @@ function getRandomInts() {
       ints.push(randNum);
     }
   }
-  return ints;
+  console.log(ints);
+  arr = ints
+  return ints
 }
 
 function checkArr(num){
@@ -26,14 +28,15 @@ function checkArr(num){
 
 function checkWinner(playerOne, playerTwo){
   arr = getRandomInts(10)
-  var sum = arr.reduce(function(a, b){
-            return a + b;
-        }, 0);
+  var sum = arr.reduce((a,b) => a + b, 0)
   if(Math.abs(playerOne - sum) < Math.abs(playerTwo - sum)) {
+    console.log("Player 1 wins!")
     return 1
   } else if (Math.abs(playerOne - sum) > Math.abs(playerTwo - sum)){
+    console.log("Player 2 wins!")
     return 2
   } else {
+    console.log("It's a draw!")
     return 3
   }
 

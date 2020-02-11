@@ -14,10 +14,13 @@
  <div class=”container”>
 <h1>TTT Smart Contract Game</h1>
 <button id="createGameButton" onclick="createNewGame()">Create Game</button>
-<button id ="ArrayCheck" onclick="checkArr()">Check Array</button>
+<button id ="ArrayCheck" onclick="getRandomInts()">Check Array</button>
 <button id = "ContractAddress" onclick="contractAddress()", src = "createQR.js">Contract Address</button>
 
-<p id="gameStatus">Hello! Please place your bets!</p>
+<p id="gameStatus">Hello! Player 1, please send ETH over to the game!</p>
+
+<button id = "playerOneSent" onclick="playerOneSentEth()">Player 1 Sent ETH</button>
+<button id = "playerTwoSent" onclick="playerTwoSentEth()">Player 2 Sent ETH</button>
 
 <p id="p1bet">player1default</p>
 <textarea cols="10" rows="1" id= "P1Bet" placeholder = "P1 Bet"></textarea>
@@ -35,7 +38,7 @@
 
 <img style = "display:none;" id="QRPic" src = "createQR.js" />
 <button id= "QRgen" onclick="QRgen()">Generate QR</button>
-<button id= "checkWinner" onclick="checkWinner()">Sum of Array</button>
+<button id= "checkWinner" onclick="checkWinner(124,125)">Sum of Array</button>
 
 </div>
 
@@ -59,6 +62,9 @@ document.getElementById("p2bet").style.display = "none";
 
 document.getElementById("p1bet").innerHTML = "p1def"
 document.getElementById("p2bet").innerHTML = "p2def"
+
+document.getElementById("playerOneSent").style.display = "none"
+document.getElementById("playerTwoSent").style.display = "none"
 
 
  </script>

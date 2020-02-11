@@ -5,9 +5,48 @@ var player2Address = undefined;
 var player1Balance = undefined;
 var player2Balance = undefined;
 
+var playerOneSent = document.getElementById("playerOneSent")
+var playerTwoSent = document.getElementById("playerTwoSent")
 
-var player1AddressEntered = false;
-var player2AddressEntered = false;
+var playerOneForm = document.getElementById("P1Bet")
+var playerOneSubmitButton = document.getElementById("playerOneBet")
+var playerTwoForm = document.getElementById("P2Bet")
+var playerTwoSubmitButton = document.getElementById("playerTwoBet")
+
+
+async function playerOneSentEth(){
+  player1Address = await TTTContract.methods.playerList(0).call({from:"0xBA4D1355bAD045CF0Cf17894D8122Bc33DB8Dd66"});
+  if(typeof(player1Address) != "string"){
+    document.getElementById("gameStatus").innerHTML = "P1, please try again!"
+    console.log("P1 not yet sent!")
+  } else {
+    document.getElementById("gameStatus").innerHTML = "Player 2, please send ETH over to the game!"
+    playerOneSent.style.display = "none"
+    playerTwoSent.style.display = "block"
+    console.log("P1 Sent!")
+
+  }
+}
+
+async function playerTwoSentEth(){
+  player2Address = await TTTContract.methods.playerList(1).call({from:"0xBA4D1355bAD045CF0Cf17894D8122Bc33DB8Dd66"});
+  if(typeof(player2Address) != "string"){
+    document.getElementById("gameStatus").innerHTML = "P2, please try again!"
+    console.log("P2 not yet sent!")
+  } else {
+    document.getElementById("gameStatus").innerHTML = "Thank you! Players, please input your bets!"
+    console.log("P2 Sent!")
+    //Make
+    playerTwoSent.style.display = "none"
+    playerOneForm.style.display = "block"
+    playerOneSubmitButton.style.display = "block"
+    playerTwoForm.style.display = "block"
+    playerTwoSubmitButton.style.display = "block"
+  }
+}
+
+
+
 
 
 function playerOneSubmit(){
@@ -24,7 +63,7 @@ function playerOneSubmit(){
     console.log(player1)
     console.log(player2)
     if(player1 && player2){
-      document.getElementById("gameStatus").innerHTML = "Player 1, please transfer ETH to the game!"
+      document.getElementById("gameStatus").innerHTML = "The game has begun!"
       waitForEthTransfer()
     }
 
@@ -50,8 +89,7 @@ function playerTwoSubmit(){
     console.log(player1)
     console.log(player2)
     if(player1 && player2){
-      document.getElementById("gameStatus").innerHTML = "Player 1, please transfer ETH to the game!"
-      waitForEthTransfer()
+      document.getElementById("gameStatus").innerHTML = "The game has begun!"
     }
   } else {
     document.getElementById("gameStatus").innerHTML = "Player 2, please input an integer value!"
@@ -59,36 +97,3 @@ function playerTwoSubmit(){
     console.log("P2Bet")
   }
 }
-
-function sleep(ms) {
-   return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-async function waitForEthTransfer() {
-  var player1AddressPromise = new Promise(function(resolve,reject){
-    player1Address = TTTContract.methods.playerList(0).call({from:'0x40a21e04563c7955fDBDC1b43138354352204Cc5'}).then(player1AddressEntered = true,player1AddressEntered = false)
-  });
-  while(player1AddressEntered == false){
-
-  //Call the contract to check for players depositing ethereum
-
-    //player1Address = TTTContract.methods.playerList(0).call({from:'0x40a21e04563c7955fDBDC1b43138354352204Cc5'})
-    console.log(player1Address)
-    console.log(player1AddressEntered)
-    await sleep(3000);
-
-  }
-
-
-
-  //player1Balance = TTTContract.methods.playerBalance(player1Address).call({from:''}).then((f) => console.log(f))
-
-
-  //TTTContract.methods.playerList(1).call({from:''}).then((f) => console.log(f))
-
-}
-
-// function checkP1address(){
-//   player1Address = TTTContract.methods.playerList(0).call({from:'0x40a21e04563c7955fDBDC1b43138354352204Cc5'}).then((f) => console.log(f))
-//   console.log(typeof(player1Address))
-// }

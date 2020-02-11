@@ -15,7 +15,7 @@ function createNewGame() {
 
 
   //web3.eth.getAccounts().then(result => {account = result[0]})
-  account = '0x40a21e04563c7955fDBDC1b43138354352204Cc5'
+  account = '0xBA4D1355bAD045CF0Cf17894D8122Bc33DB8Dd66'
 
   console.log(account)
 
@@ -34,28 +34,22 @@ function createNewGame() {
   //Deploying the contract
   //Consider reducing the gas, because right now you need a minimum of 45ETH in the account lol.
   //TTTContract.deploy({data:bytecode}).send({from:account,gas:21000,gasPrice:web3.utils.toWei('0.00003', 'ether')}).then((newContractInstance) => {TTTContract.options.address=newContractInstance.options.address})
-  TTTContract.deploy({data:bytecode}).send({from:'0x40a21e04563c7955fDBDC1b43138354352204Cc5',gas:1000000,gasPrice:web3.utils.toWei("0.0000000025","ether")}).then((newContractInstance) =>{TTTContract.options.address=newContractInstance.options.address});
+  TTTContract.deploy({data:bytecode}).send({from:'0xBA4D1355bAD045CF0Cf17894D8122Bc33DB8Dd66',gas:1000000,gasPrice:web3.utils.toWei("0.0000000025","ether")}).then((newContractInstance) =>{TTTContract.options.address=newContractInstance.options.address});
 
   var gameStatus = document.getElementById("gameStatus")
   var createGameButton = document.getElementById("createGameButton")
   var arrayCheckButton = document.getElementById("ArrayCheck")
   var contractCheckButton = document.getElementById("ContractAddress")
-  var playerOneForm = document.getElementById("P1Bet")
-  var playerOneSubmitButton = document.getElementById("playerOneBet")
-  var playerTwoForm = document.getElementById("P2Bet")
-  var playerTwoSubmitButton = document.getElementById("playerTwoBet")
   var qrGen = document.getElementById("QRgen")
   var p1betConfirm = document.getElementById("p1betConfirm")
   var p2betConfirm = document.getElementById("p2betConfirm")
+  var playerOneSent = document.getElementById("playerOneSent")
 
 
   createGameButton.style.display = "none"
   gameStatus.style.display = "block"
   arrayCheckButton.style.display = "block"
   contractCheckButton.style.display = "block"
-  playerOneForm.style.display = "block"
-  playerOneSubmitButton.style.display = "block"
-  playerTwoForm.style.display = "block"
-  playerTwoSubmitButton.style.display = "block"
   qrGen.style.display = "block"
+  playerOneSent.style.display = "block"
   }
