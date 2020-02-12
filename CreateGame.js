@@ -53,3 +53,7 @@ function createNewGame() {
   qrGen.style.display = "block"
   playerOneSent.style.display = "block"
   }
+
+function checkMethods(){
+  console.log(TTTContract.methods)
+}
