@@ -4,6 +4,8 @@ var player1Address = undefined;
 var player2Address = undefined;
 var player1Balance = undefined;
 var player2Balance = undefined;
+var p1betConfirm = undefined;
+var p2betConfirm = undefined;
 
 var playerOneSent = document.getElementById("playerOneSent")
 var playerTwoSent = document.getElementById("playerTwoSent")
@@ -12,6 +14,10 @@ var playerOneForm = document.getElementById("P1Bet")
 var playerOneSubmitButton = document.getElementById("playerOneBet")
 var playerTwoForm = document.getElementById("P2Bet")
 var playerTwoSubmitButton = document.getElementById("playerTwoBet")
+var startGame = document.getElementById("startGame")
+
+let player1finalbet = document.getElementById("player1Bet")
+let player2finalbet = document.getElementById("player2Bet")
 
 
 async function playerOneSentEth(){
@@ -24,6 +30,8 @@ async function playerOneSentEth(){
     playerOneSent.style.display = "none"
     playerTwoSent.style.display = "block"
     console.log("P1 Sent!")
+    console.log(player1Address)
+    console.log(typeof(player1Address))
 
   }
 }
@@ -45,12 +53,8 @@ async function playerTwoSentEth(){
   }
 }
 
-
-
-
-
 function playerOneSubmit(){
-  var p1betConfirm = Number(document.getElementById("P1Bet").value);
+  p1betConfirm = Number(document.getElementById("P1Bet").value);
   if (Number.isInteger(p1betConfirm)) {
     document.getElementById("P1Bet").style.display = "none";
     document.getElementById("playerOneBet").style.display = "none";
@@ -59,12 +63,16 @@ function playerOneSubmit(){
     document.getElementById("p1bet").style.display = "block";
     document.getElementById("gameStatus").innerHTML = "Hello! Please place your bets!"
     document.getElementById("p1betConfirm").innerHTML = "p1betted"
+    player1finalbet.value = p1betConfirm;
+    console.log(p1betConfirm)
+    console.log(player1finalbet.value)
+    console.log(document.getElementById("player1Bet").value)
     player1 = true;
-    console.log(player1)
-    console.log(player2)
+
     if(player1 && player2){
-      document.getElementById("gameStatus").innerHTML = "The game has begun!"
-      waitForEthTransfer()
+      document.getElementById("gameStatus").innerHTML = "Game in Progress!"
+      TTTContract.methods.beginGame().send({from:'0xBA4D1355bAD045CF0Cf17894D8122Bc33DB8Dd66',gas:1000000,gasPrice:web3.utils.toWei("0.0000000025","ether")}).then((f) => console.log(f));
+      checkWinner()
     }
 
   } else {
@@ -75,7 +83,7 @@ function playerOneSubmit(){
 }
 
 function playerTwoSubmit(){
-  var p2betConfirm = Number(document.getElementById("P2Bet").value);
+  p2betConfirm = Number(document.getElementById("P2Bet").value);
   if (Number.isInteger(p2betConfirm)) {
     document.getElementById("P2Bet").style.display = "none";
     document.getElementById("playerTwoBet").style.display = "none";
@@ -84,16 +92,79 @@ function playerTwoSubmit(){
     document.getElementById("p2bet").style.display = "block";
     document.getElementById("gameStatus").innerHTML = "Hello! Please place your bets!"
     document.getElementById("p2betConfirm").innerHTML = "p2betted"
-    console.log(document.getElementById("P2Bet").value)
+    player2finalbet.value = p2betConfirm;
+    console.log(p2betConfirm)
+    console.log(player2finalbet.value)
+    console.log(document.getElementById("player2Bet").value)
     player2 = true;
-    console.log(player1)
-    console.log(player2)
+
     if(player1 && player2){
-      document.getElementById("gameStatus").innerHTML = "The game has begun!"
+      document.getElementById("gameStatus").innerHTML = "Game in Progress!"
+      TTTContract.methods.beginGame().send({from:'0xBA4D1355bAD045CF0Cf17894D8122Bc33DB8Dd66',gas:1000000,gasPrice:web3.utils.toWei("0.0000000025","ether")}).then((f) => console.log(f));
+      checkWinner()
     }
   } else {
     document.getElementById("gameStatus").innerHTML = "Player 2, please input an integer value!"
     console.log(Number.isInteger("P2Bet"))
     console.log("P2Bet")
   }
+}
+
+//-----------------------------------------------------
+//Import from randomNumberGame.js
+
+var arr = [];
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+function getRandomInts() {
+  var ints = [];
+  while (ints.length < 5) {
+    var randNum = getRandomInt(1, 50);
+    if(ints.indexOf(randNum) == -1){
+      ints.push(randNum);
+    }
+  }
+  console.log(ints);
+  arr = ints
+  return ints
+}
+
+function checkArr(num){
+  console.log(arr);
+}
+
+function checkWinner(){
+  arr = getRandomInts(10)
+  var sum = arr.reduce((a,b) => a + b, 0)
+  if(Math.abs(p1betConfirm - sum) < Math.abs(p2betConfirm - sum)) {
+    console.log("Player 1 wins!")
+    console.log(p1betConfirm)
+    console.log(typeof(p1betConfirm))
+    console.log(p2betConfirm)
+    console.log(typeof(p2betConfirm))
+    TTTContract.methods.endGame(player1Address).send({from:'0xBA4D1355bAD045CF0Cf17894D8122Bc33DB8Dd66',gas:1000000,gasPrice:web3.utils.toWei("0.0000000025","ether")}).then((f) => console.log(f));
+
+    player1Address
+
+    return 1
+  } else if (Math.abs(p1betConfirm - sum) > Math.abs(p2betConfirm - sum)){
+    console.log("Player 2 wins!")
+    console.log(p1betConfirm)
+    console.log(typeof(p1betConfirm))
+    console.log(p2betConfirm)
+    console.log(typeof(p2betConfirm))
+    TTTContract.methods.endGame(player2Address).send({from:'0xBA4D1355bAD045CF0Cf17894D8122Bc33DB8Dd66',gas:1000000,gasPrice:web3.utils.toWei("0.0000000025","ether")}).then((f) => console.log(f));
+    return 2
+  } else {
+    console.log("It's a draw!")
+    console.log(p1betConfirm)
+    console.log(typeof(p1betConfirm))
+    console.log(p2betConfirm)
+    console.log(typeof(p2betConfirm))
+
+    return 3
+  }
+
 }
