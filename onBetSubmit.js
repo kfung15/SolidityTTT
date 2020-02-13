@@ -20,6 +20,7 @@ let player1finalbet = document.getElementById("player1Bet")
 let player2finalbet = document.getElementById("player2Bet")
 
 
+//Function that waits for P1 to send ETH before proceeding
 async function playerOneSentEth(){
   player1Address = await TTTContract.methods.playerList(0).call({from:"0xBA4D1355bAD045CF0Cf17894D8122Bc33DB8Dd66"});
   if(typeof(player1Address) != "string"){
@@ -36,6 +37,7 @@ async function playerOneSentEth(){
   }
 }
 
+//Function that waits for P2 to send ETH before proceeding
 async function playerTwoSentEth(){
   player2Address = await TTTContract.methods.playerList(1).call({from:"0xBA4D1355bAD045CF0Cf17894D8122Bc33DB8Dd66"});
   if(typeof(player2Address) != "string"){
@@ -53,6 +55,7 @@ async function playerTwoSentEth(){
   }
 }
 
+//Function that accepts and stores P1's bet number
 function playerOneSubmit(){
   p1betConfirm = Number(document.getElementById("P1Bet").value);
   if (Number.isInteger(p1betConfirm)) {
@@ -62,7 +65,6 @@ function playerOneSubmit(){
     document.getElementById("p1bet").innerHTML = p1default.concat(p1betConfirm);
     document.getElementById("p1bet").style.display = "block";
     document.getElementById("gameStatus").innerHTML = "Hello! Please place your bets!"
-    document.getElementById("p1betConfirm").innerHTML = "p1betted"
     player1finalbet.value = p1betConfirm;
     console.log(p1betConfirm)
     console.log(player1finalbet.value)
@@ -82,6 +84,7 @@ function playerOneSubmit(){
 
 }
 
+//Function that accepts and stores P2's bet number
 function playerTwoSubmit(){
   p2betConfirm = Number(document.getElementById("P2Bet").value);
   if (Number.isInteger(p2betConfirm)) {
@@ -91,7 +94,6 @@ function playerTwoSubmit(){
     document.getElementById("p2bet").innerHTML = p2default.concat(p2betConfirm);
     document.getElementById("p2bet").style.display = "block";
     document.getElementById("gameStatus").innerHTML = "Hello! Please place your bets!"
-    document.getElementById("p2betConfirm").innerHTML = "p2betted"
     player2finalbet.value = p2betConfirm;
     console.log(p2betConfirm)
     console.log(player2finalbet.value)
@@ -118,6 +120,8 @@ var arr = [];
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
+
+//Function that generates an array with 5 random numbers
 function getRandomInts() {
   var ints = [];
   while (ints.length < 5) {
@@ -135,6 +139,8 @@ function checkArr(num){
   console.log(arr);
 }
 
+//Function that adds up all the numbers in the array, and checks for the winner.
+//The winner is defined as the player that guessed the number closest to the sum.
 function checkWinner(){
   arr = getRandomInts(10)
   var sum = arr.reduce((a,b) => a + b, 0)
@@ -146,9 +152,6 @@ function checkWinner(){
     console.log(typeof(p2betConfirm))
     TTTContract.methods.endGame(player1Address).send({from:'0xBA4D1355bAD045CF0Cf17894D8122Bc33DB8Dd66',gas:1000000,gasPrice:web3.utils.toWei("0.0000000025","ether")}).then((f) => console.log(f));
 
-    player1Address
-
-    return 1
   } else if (Math.abs(p1betConfirm - sum) > Math.abs(p2betConfirm - sum)){
     console.log("Player 2 wins!")
     console.log(p1betConfirm)
@@ -156,7 +159,7 @@ function checkWinner(){
     console.log(p2betConfirm)
     console.log(typeof(p2betConfirm))
     TTTContract.methods.endGame(player2Address).send({from:'0xBA4D1355bAD045CF0Cf17894D8122Bc33DB8Dd66',gas:1000000,gasPrice:web3.utils.toWei("0.0000000025","ether")}).then((f) => console.log(f));
-    return 2
+
   } else {
     console.log("It's a draw!")
     console.log(p1betConfirm)
@@ -164,7 +167,6 @@ function checkWinner(){
     console.log(p2betConfirm)
     console.log(typeof(p2betConfirm))
 
-    return 3
   }
 
 }

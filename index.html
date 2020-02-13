@@ -8,38 +8,39 @@
  <title>Document</title>
  <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.2.5/dist/web3.min.js"></script>
 
-
 </head>
 <body>
  <div class=”container”>
 <h1>TTT Smart Contract Game</h1>
+<!--Button to create the game-->
 <button id="createGameButton" onclick="createNewGame()">Create Game</button>
-<button id = "ContractAddress" onclick="contractAddress()">Contract Address</button>
 
+<!--Game Status text that changes with player activity-->
 <p id="gameStatus">Hello! Player 1, please send ETH over to the game!</p>
 
+<!--Buttons that players click to confirm sending of ETH to contract -->
 <button id = "playerOneSent" onclick="playerOneSentEth()">Player 1 Sent ETH</button>
 <button id = "playerTwoSent" onclick="playerTwoSentEth()">Player 2 Sent ETH</button>
 
-<p id="p1bet">player1default</p>
+<!--Text box and submit button for P1 to input bet number -->
 <textarea cols="10" rows="1" id= "P1Bet" placeholder = "P1 Bet" value = ""></textarea>
 <button id = "playerOneBet" onclick="playerOneSubmit()">Player 1 Confirm</button>
-<p id="p1betConfirm"></p>
 
-
-<p id="p2bet">player2default</p>
-<input id ="player1Bet" type="number" value = "10">
-<input id ="player2Bet" type="number" value = "11">
+<!--Text box and submit button for P2 to input bet number -->
 <textarea cols="10" rows="1" id= "P2Bet" placeholder = "P2 Bet" value = ""></textarea>
 <button id = "playerTwoBet" onclick="playerTwoSubmit()">Player 2 Confirm</button>
-<p id="p2betConfirm"></p>
 
+<!--Default bet numbers, for debugging purposes -->
+<input id ="player1Bet" type="number" value = "10">
+<input id ="player2Bet" type="number" value = "11">
 
-
+<!--QR generator button that makes contract QR code pop out -->
 <img style = "display:none;" id="QRPic" src = "createQR.js" />
 <button id= "QRgen" onclick="QRgen()">Generate QR</button>
+
 <br>
 <br>
+<!--Debugging corner -->
 <button id ="ArrayCheck" onclick="getRandomInts()">Check Array</button>
 <button id= "checkWinner" onclick="checkWinner(124,125)">Sum of Array</button>
 <button id= "checkMethods" onclick="checkMethods()">Contract Methods</button>
@@ -47,7 +48,6 @@
 
 </div>
 
-</div>
 
 <script type ="text/javascript">
 
@@ -61,14 +61,7 @@ document.getElementById("playerOneBet").style.display = "none";
 document.getElementById("P2Bet").style.display = "none";
 document.getElementById("playerTwoBet").style.display = "none";
 document.getElementById("QRgen").style.display = "none";
-document.getElementById("p1betConfirm").style.display = "none";
-document.getElementById("p2betConfirm").style.display = "none";
 
-document.getElementById("p1bet").style.display = "none";
-document.getElementById("p2bet").style.display = "none";
-
-document.getElementById("p1bet").innerHTML = "p1def"
-document.getElementById("p2bet").innerHTML = "p2def"
 
 document.getElementById("player1Bet").style.display = "none";
 document.getElementById("player2Bet").style.display = "none";
