@@ -19,11 +19,12 @@ var startGame = document.getElementById("startGame");
 let player1finalbet = document.getElementById("player1Bet");
 let player2finalbet = document.getElementById("player2Bet");
 
+
 //Function that waits for P1 to send ETH before proceeding
 async function playerOneSentEth() {
   player1Address = await TTTContract.methods
     .playerList(0)
-    .call({ from: "0xBA4D1355bAD045CF0Cf17894D8122Bc33DB8Dd66" });
+    .call({ from: account });
   if (typeof player1Address != "string") {
     document.getElementById("gameStatus").innerHTML = "P1, please try again!";
     console.log("P1 not yet sent!");
@@ -42,7 +43,7 @@ async function playerOneSentEth() {
 async function playerTwoSentEth() {
   player2Address = await TTTContract.methods
     .playerList(1)
-    .call({ from: "0xBA4D1355bAD045CF0Cf17894D8122Bc33DB8Dd66" });
+    .call({ from: account });
   if (typeof player2Address != "string") {
     document.getElementById("gameStatus").innerHTML = "P2, please try again!";
     console.log("P2 not yet sent!");
@@ -81,7 +82,7 @@ function playerOneSubmit() {
       TTTContract.methods
         .beginGame()
         .send({
-          from: "0xBA4D1355bAD045CF0Cf17894D8122Bc33DB8Dd66",
+          from: account,
           gas: 1000000,
           gasPrice: web3.utils.toWei("0.0000000025", "ether")
         })
@@ -117,7 +118,7 @@ function playerTwoSubmit() {
       TTTContract.methods
         .beginGame()
         .send({
-          from: "0xBA4D1355bAD045CF0Cf17894D8122Bc33DB8Dd66",
+          from: account,
           gas: 1000000,
           gasPrice: web3.utils.toWei("0.0000000025", "ether")
         })
@@ -173,7 +174,7 @@ function checkWinner() {
     TTTContract.methods
       .endGame(player1Address)
       .send({
-        from: "0xBA4D1355bAD045CF0Cf17894D8122Bc33DB8Dd66",
+        from: account,
         gas: 1000000,
         gasPrice: web3.utils.toWei("0.0000000025", "ether")
       })
@@ -187,7 +188,7 @@ function checkWinner() {
     TTTContract.methods
       .endGame(player2Address)
       .send({
-        from: "0xBA4D1355bAD045CF0Cf17894D8122Bc33DB8Dd66",
+        from: account,
         gas: 1000000,
         gasPrice: web3.utils.toWei("0.0000000025", "ether")
       })
