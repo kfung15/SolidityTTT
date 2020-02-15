@@ -12,10 +12,11 @@ let web3 = new Web3("ws://127.0.0.1:8545");
 
 async function getFirstAddress() {
   account = (await web3.eth.getAccounts())[0];
+  // console.log("this is account", account);
   createNewGame(account);
 }
 
-function createNewGame(account) {
+async function createNewGame(account) {
   //Setting the default address as Address0.
   // web3.eth.getAccounts().then(result => {
   //   account = result[0]
@@ -30,11 +31,11 @@ function createNewGame(account) {
   console.log(abi);
 
   //Defining the contract
-  TTTContract = new web3.eth.Contract(abi, account);
-  console.log(TTTContract);
+  TTTContract = await new web3.eth.Contract(abi, account);
+  console.log("this is the contract", TTTContract.options);
 
   //Deploying the contract
-  TTTContract.deploy({ data: bytecode })
+  await TTTContract.deploy({ data: bytecode })
     .send({
       from: account,
       gas: 1000000,
@@ -58,7 +59,7 @@ function createNewGame(account) {
   //qrGen.style.display = "block"
   playerOneSent.style.display = "block";
 
-  QRgen();
+  await QRgen();
 }
 
 function checkMethods() {

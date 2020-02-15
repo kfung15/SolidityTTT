@@ -1,26 +1,23 @@
-function contractAddress(){
-  console.log(TTTContract.options.address)
+function contractAddress() {
+  console.log(TTTContract.options.address);
 }
 
-function QRgen(){
-  let contractAddress = TTTContract.options.address
-  let contractAddressStatus = document.getElementById("contractAddress")
+async function QRgen() {
+  let contractAddress = await TTTContract.options.address;
+  console.log("this is address", contractAddress);
+  let contractAddressStatus = document.getElementById("contractAddress");
 
-  console.log(TTTContract.options)
-  console.log(TTTContract.options.address)
-  console.log(contractAddress)
+  contractAddressStatus.innerHTML = contractAddress;
+  console.log("new address", contractAddressStatus.innerHTML);
 
-  contractAddressStatus.innerHTML = contractAddress
-  contractAddressStatus.style.display = "block";
+  // create QR code after contract is deplyed
+  base_url = "http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=";
+  second_url = base_url + contractAddress;
+  third_url = second_url + "&chld=H|0";
 
-  base_url = "http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl="
-  second_url = base_url + contractAddress
-  third_url = second_url + "&chld=H|0"
-
-  var img = document.getElementById('QRPic');
-  img.src = third_url.replace("90x90", "300x300")
+  var img = document.getElementById("QRPic");
+  img.src = third_url.replace("90x90", "300x300");
   img.style.display = "block";
 
-  console.log(third_url)
-
+  console.log(third_url);
 }

@@ -58,7 +58,6 @@
 
       <!--QR generator button that makes contract QR code pop out -->
       <img style="display:none;" id="QRPic" src="createQR.js" />
-      <button id="QRgen" onclick="QRgen()">Generate QR</button>
 
       <br />
       <br />
@@ -72,7 +71,7 @@
       web3 = new Web3("ws://127.0.0.1:8545");
 
       document.getElementById("gameStatus").style.display = "none";
-      document.getElementById("contractAddress").style.display = "none";
+      // document.getElementById("contractAddress").style.display = "none";
       document.getElementById("ArrayCheck").style.display = "none";
       document.getElementById("P1Bet").style.display = "none";
       document.getElementById("playerOneBet").style.display = "none";
