@@ -1,81 +1,95 @@
 <!DOCTYPE html>
-<html lang=”en”>
-<head>
-  <link rel="stylesheet" href="index.css">
- <meta charset=”UTF-8">
- <meta name=”viewport” content=”width=device-width, initial-scale=1.0">
- <meta http-equiv=”X-UA-Compatible” content=”ie=edge”>
- <title>Document</title>
- <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.2.5/dist/web3.min.js"></script>
+<html lang="”en”">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css" />
 
-</head>
-<body>
- <div class=”container”>
-<h1>TTT Smart Contract Game</h1>
-<!--Button to create the game-->
-<button id="createGameButton" onclick="getFirstAddress()">Create Game</button>
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.2.5/dist/web3.min.js"></script>
+  </head>
+  <body>
+    <div class="”container”">
+      <h1>TTT Smart Contract Game</h1>
+      <!--Button to create the game-->
+      <button id="createGameButton" onclick="getFirstAddress()">
+        Create Game
+      </button>
 
-<!--Game Status text that changes with player activity-->
-<p id="gameStatus">Hello! Player 1, please send ETH over to the game!</p>
-<p id="contractAddress"></p>
+      <!--Game Status text that changes with player activity-->
+      <p id="gameStatus">Hello! Player 1, please send ETH over to the game!</p>
+      <p id="contractAddress"></p>
 
-<!--Buttons that players click to confirm sending of ETH to contract -->
-<button id = "playerOneSent" onclick="playerOneSentEth()">Player 1 Sent ETH</button>
-<button id = "playerTwoSent" onclick="playerTwoSentEth()">Player 2 Sent ETH</button>
+      <!--Buttons that players click to confirm sending of ETH to contract -->
+      <button id="playerOneSent" onclick="playerOneSentEth()">
+        Player 1 Sent ETH
+      </button>
+      <button id="playerTwoSent" onclick="playerTwoSentEth()">
+        Player 2 Sent ETH
+      </button>
 
-<!--Text box and submit button for P1 to input bet number -->
-<textarea cols="10" rows="1" id= "P1Bet" placeholder = "P1 Bet" value = ""></textarea>
-<button id = "playerOneBet" onclick="playerOneSubmit()">Player 1 Confirm</button>
+      <!--Text box and submit button for P1 to input bet number -->
+      <textarea
+        cols="10"
+        rows="1"
+        id="P1Bet"
+        placeholder="P1 Bet"
+        value=""
+      ></textarea>
+      <button id="playerOneBet" onclick="playerOneSubmit()">
+        Player 1 Confirm
+      </button>
 
-<!--Text box and submit button for P2 to input bet number -->
-<textarea cols="10" rows="1" id= "P2Bet" placeholder = "P2 Bet" value = ""></textarea>
-<button id = "playerTwoBet" onclick="playerTwoSubmit()">Player 2 Confirm</button>
+      <!--Text box and submit button for P2 to input bet number -->
+      <textarea
+        cols="10"
+        rows="1"
+        id="P2Bet"
+        placeholder="P2 Bet"
+        value=""
+      ></textarea>
+      <button id="playerTwoBet" onclick="playerTwoSubmit()">
+        Player 2 Confirm
+      </button>
 
-<!--Default bet numbers, for debugging purposes -->
-<input id ="player1Bet" type="number" value = "10">
-<input id ="player2Bet" type="number" value = "11">
+      <!--Default bet numbers, for debugging purposes -->
+      <input id="player1Bet" type="number" value="10" />
+      <input id="player2Bet" type="number" value="11" />
 
-<!--QR generator button that makes contract QR code pop out -->
-<img style = "display:none;" id="QRPic" src = "createQR.js" />
-<button id= "QRgen" onclick="QRgen()">Generate QR</button>
+      <!--QR generator button that makes contract QR code pop out -->
+      <img style="display:none;" id="QRPic" src="createQR.js" />
+      <button id="QRgen" onclick="QRgen()">Generate QR</button>
 
-<br>
-<br>
-<!--Debugging corner -->
-<button id ="ArrayCheck" onclick="getRandomInts()">Check Array</button>
-<!--button id= "checkWinner" onclick="checkWinner(124,125)">Sum of Array</button>-->
-<!--button id= "checkMethods" onclick="checkMethods()">Contract Methods</button>-->
+      <br />
+      <br />
+      <!--Debugging corner -->
+      <button id="ArrayCheck" onclick="getRandomInts()">Check Array</button>
+      <!--button id= "checkWinner" onclick="checkWinner(124,125)">Sum of Array</button>-->
+      <!--button id= "checkMethods" onclick="checkMethods()">Contract Methods</button>-->
+    </div>
 
+    <script type="text/javascript">
+      web3 = new Web3("ws://127.0.0.1:8545");
 
-</div>
+      document.getElementById("gameStatus").style.display = "none";
+      document.getElementById("contractAddress").style.display = "none";
+      document.getElementById("ArrayCheck").style.display = "none";
+      document.getElementById("P1Bet").style.display = "none";
+      document.getElementById("playerOneBet").style.display = "none";
+      document.getElementById("P2Bet").style.display = "none";
+      document.getElementById("playerTwoBet").style.display = "none";
+      //document.getElementById("QRgen").style.display = "none";
 
+      document.getElementById("player1Bet").style.display = "none";
+      document.getElementById("player2Bet").style.display = "none";
 
-<script type ="text/javascript">
-
-web3 = new Web3("ws://127.0.0.1:8545")
-
-document.getElementById("gameStatus").style.display = "none";
-document.getElementById("contractAddress").style.display = "none";
-document.getElementById("ArrayCheck").style.display = "none";
-document.getElementById("P1Bet").style.display = "none";
-document.getElementById("playerOneBet").style.display = "none";
-document.getElementById("P2Bet").style.display = "none";
-document.getElementById("playerTwoBet").style.display = "none";
-//document.getElementById("QRgen").style.display = "none";
-
-
-document.getElementById("player1Bet").style.display = "none";
-document.getElementById("player2Bet").style.display = "none";
-
-document.getElementById("playerOneSent").style.display = "none"
-document.getElementById("playerTwoSent").style.display = "none"
-
-
- </script>
- <!--script type="text" id="abi" src="TTT_sol_tictactoe.abi"></script> -->
- <!-- <script type="text" id="bin" src="TTT_sol_tictactoe.js"></script> -->
- <script src="CreateGame.js"></script>
- <script src="createQR.js"></script>
- <script src="onBetSubmit.js"></script>
-</body>
+      document.getElementById("playerOneSent").style.display = "none";
+      document.getElementById("playerTwoSent").style.display = "none";
+    </script>
+    <!--script type="text" id="abi" src="TTT_sol_tictactoe.abi"></script> -->
+    <!-- <script type="text" id="bin" src="TTT_sol_tictactoe.js"></script> -->
+    <script src="CreateGame.js"></script>
+    <script src="createQR.js"></script>
+    <script src="onBetSubmit.js"></script>
+  </body>
 </html>
