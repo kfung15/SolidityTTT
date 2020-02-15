@@ -159,7 +159,6 @@ function checkWinner(){
     console.log(p2betConfirm)
     console.log(typeof(p2betConfirm))
     TTTContract.methods.endGame(player2Address).send({from:'0xBA4D1355bAD045CF0Cf17894D8122Bc33DB8Dd66',gas:1000000,gasPrice:web3.utils.toWei("0.0000000025","ether")}).then((f) => console.log(f));
-
   } else {
     console.log("It's a draw!")
     console.log(p1betConfirm)

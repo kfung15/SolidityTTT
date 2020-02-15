@@ -13,10 +13,11 @@
  <div class=”container”>
 <h1>TTT Smart Contract Game</h1>
 <!--Button to create the game-->
-<button id="createGameButton" onclick="createNewGame()">Create Game</button>
+<button id="createGameButton" onclick="getFirstAddress()">Create Game</button>
 
 <!--Game Status text that changes with player activity-->
 <p id="gameStatus">Hello! Player 1, please send ETH over to the game!</p>
+<p id="contractAddress"></p>
 
 <!--Buttons that players click to confirm sending of ETH to contract -->
 <button id = "playerOneSent" onclick="playerOneSentEth()">Player 1 Sent ETH</button>
@@ -42,8 +43,8 @@
 <br>
 <!--Debugging corner -->
 <button id ="ArrayCheck" onclick="getRandomInts()">Check Array</button>
-<button id= "checkWinner" onclick="checkWinner(124,125)">Sum of Array</button>
-<button id= "checkMethods" onclick="checkMethods()">Contract Methods</button>
+<!--button id= "checkWinner" onclick="checkWinner(124,125)">Sum of Array</button>-->
+<!--button id= "checkMethods" onclick="checkMethods()">Contract Methods</button>-->
 
 
 </div>
@@ -54,13 +55,13 @@
 web3 = new Web3("ws://127.0.0.1:8545")
 
 document.getElementById("gameStatus").style.display = "none";
+document.getElementById("contractAddress").style.display = "none";
 document.getElementById("ArrayCheck").style.display = "none";
-document.getElementById("ContractAddress").style.display = "none";
 document.getElementById("P1Bet").style.display = "none";
 document.getElementById("playerOneBet").style.display = "none";
 document.getElementById("P2Bet").style.display = "none";
 document.getElementById("playerTwoBet").style.display = "none";
-document.getElementById("QRgen").style.display = "none";
+//document.getElementById("QRgen").style.display = "none";
 
 
 document.getElementById("player1Bet").style.display = "none";

@@ -3,7 +3,16 @@ function contractAddress(){
 }
 
 function QRgen(){
-  contractAddress = TTTContract.options.address
+  let contractAddress = TTTContract.options.address
+  let contractAddressStatus = document.getElementById("contractAddress")
+
+  console.log(TTTContract.options)
+  console.log(TTTContract.options.address)
+  console.log(contractAddress)
+
+  contractAddressStatus.innerHTML = contractAddress
+  contractAddressStatus.style.display = "block";
+
   base_url = "http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl="
   second_url = base_url + contractAddress
   third_url = second_url + "&chld=H|0"
