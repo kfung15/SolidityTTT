@@ -19,7 +19,6 @@ var startGame = document.getElementById("startGame");
 let player1finalbet = document.getElementById("player1Bet");
 let player2finalbet = document.getElementById("player2Bet");
 
-
 //Function that waits for P1 to send ETH before proceeding
 async function playerOneSentEth() {
   player1Address = await TTTContract.methods
@@ -136,41 +135,15 @@ function playerTwoSubmit() {
 //-----------------------------------------------------
 //Import from randomNumberGame.js
 
-var arr = [];
-
-function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
-}
-
-//Function that generates an array with 5 random numbers
-function getRandomInts() {
-  var ints = [];
-  while (ints.length < 5) {
-    var randNum = getRandomInt(1, 50);
-    if (ints.indexOf(randNum) == -1) {
-      ints.push(randNum);
-    }
-  }
-  console.log(ints);
-  arr = ints;
-  return ints;
-}
-
-function checkArr(num) {
-  console.log(arr);
-}
-
 //Function that adds up all the numbers in the array, and checks for the winner.
 //The winner is defined as the player that guessed the number closest to the sum.
 function checkWinner() {
-  arr = getRandomInts(10);
-  var sum = arr.reduce((a, b) => a + b, 0);
-  if (Math.abs(p1betConfirm - sum) < Math.abs(p2betConfirm - sum)) {
-    console.log("Player 1 wins!");
-    console.log(p1betConfirm);
-    console.log(typeof p1betConfirm);
-    console.log(p2betConfirm);
-    console.log(typeof p2betConfirm);
+  let randomNumber = Math.floor(Math.random() * 250);
+  if (
+    Math.abs(p1betConfirm - randomNumber) <
+    Math.abs(p2betConfirm - randomNumber)
+  ) {
+    console.log("Player 1 wins");
     TTTContract.methods
       .endGame(player1Address)
       .send({
@@ -179,12 +152,12 @@ function checkWinner() {
         gasPrice: web3.utils.toWei("0.0000000025", "ether")
       })
       .then(f => console.log(f));
-  } else if (Math.abs(p1betConfirm - sum) > Math.abs(p2betConfirm - sum)) {
-    console.log("Player 2 wins!");
-    console.log(p1betConfirm);
-    console.log(typeof p1betConfirm);
-    console.log(p2betConfirm);
-    console.log(typeof p2betConfirm);
+  } else if (
+    Math.abs(p2betConfirm - randomNumber) <
+    Math.abs(p1betConfirm - randomNumber)
+  ) {
+    console.log("Player 2 wins");
+
     TTTContract.methods
       .endGame(player2Address)
       .send({
@@ -195,9 +168,5 @@ function checkWinner() {
       .then(f => console.log(f));
   } else {
     console.log("It's a draw!");
-    console.log(p1betConfirm);
-    console.log(typeof p1betConfirm);
-    console.log(p2betConfirm);
-    console.log(typeof p2betConfirm);
   }
 }
