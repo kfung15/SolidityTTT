@@ -7,7 +7,7 @@ async function QRgen() {
   console.log("this is address", contractAddress);
   let contractAddressStatus = document.getElementById("contractAddress");
 
-  contractAddressStatus.innerHTML = contractAddress;
+  contractAddressStatus.innerHTML = ("Game Contract ID: ").concat(contractAddress);
   console.log("new address", contractAddressStatus.innerHTML);
 
   // create QR code after contract is deplyed

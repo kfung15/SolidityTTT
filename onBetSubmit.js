@@ -19,6 +19,7 @@ var startGame = document.getElementById("startGame");
 let player1finalbet = document.getElementById("player1Bet");
 let player2finalbet = document.getElementById("player2Bet");
 
+
 //Function that waits for P1 to send ETH before proceeding
 async function playerOneSentEth() {
   player1Address = await TTTContract.methods
@@ -113,7 +114,6 @@ function playerTwoSubmit() {
     player2 = true;
 
     if (player1 && player2) {
-      document.getElementById("gameStatus").innerHTML = "Game in Progress!";
       TTTContract.methods
         .beginGame()
         .send({
@@ -143,7 +143,7 @@ function checkWinner() {
     Math.abs(p1betConfirm - randomNumber) <
     Math.abs(p2betConfirm - randomNumber)
   ) {
-    console.log("Player 1 wins");
+    document.getElementById("gameStatus").innerHTML = "Player 1 wins!";
     TTTContract.methods
       .endGame(player1Address)
       .send({
@@ -151,13 +151,13 @@ function checkWinner() {
         gas: 1000000,
         gasPrice: web3.utils.toWei("0.0000000025", "ether")
       })
-      .then(f => console.log(f));
+      .then(f => document.getElementById("endGameTxAddress").innerHTML = ("The End Game TX ID is ").concat(f.transactionHash))
+      //.then(f => console.log(f));
   } else if (
     Math.abs(p2betConfirm - randomNumber) <
     Math.abs(p1betConfirm - randomNumber)
   ) {
-    console.log("Player 2 wins");
-
+    document.getElementById("gameStatus").innerHTML = "Player 2 wins!";
     TTTContract.methods
       .endGame(player2Address)
       .send({
@@ -165,7 +165,8 @@ function checkWinner() {
         gas: 1000000,
         gasPrice: web3.utils.toWei("0.0000000025", "ether")
       })
-      .then(f => console.log(f));
+      .then(f => document.getElementById("endGameTxAddress").innerHTML = ("The End Game TX ID is ").concat(f.transactionHash))
+      //.then(f => console.log(f));
   } else {
     console.log("It's a draw!");
   }
